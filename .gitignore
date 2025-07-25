@@ -13,6 +13,8 @@ venv/
 env/
 *.env
 *bkp*
+*github.sh
+
 # Arquivos de configuração sensíveis (Exemplo)
 # Cuidado para não subir senhas do Asterisk ou de APIs
 credentials.json
