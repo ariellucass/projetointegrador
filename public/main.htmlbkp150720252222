@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>SGRC - Gestão de Ramais do Condomínio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Tom de cinza bem claro para o fundo */
+            padding: 40px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
+            line-height: 1.6;
+            color: #343a40; /* Cor do texto padrão mais escura para melhor contraste */
+        }
+        .container {
+            background: #fff;
+            border-radius: 12px; /* Bordas mais arredondadas */
+            padding: 40px; /* Aumentar o padding interno */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Sombra suave */
+            border: 1px solid #e9ecef; /* Borda sutil para separação */
+        }
+        h1 {
+            color: #007bff; /* Um azul mais amigável e padrão do Bootstrap */
+            margin-bottom: 35px;
+            font-weight: 500; /* Peso da fonte um pouco mais leve */
+        }
+        .nav-tabs {
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 25px;
+        }
+        .nav-tabs .nav-link {
+            border: 1px solid transparent;
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+            color: #495057;
+            padding: 10px 20px;
+            margin-right: 5px;
+            transition: all 0.2s ease-in-out; /* Transição suave para hover */
+        }
+        .nav-tabs .nav-link:hover,
+        .nav-tabs .nav-link:focus {
+            border-color: #e9ecef #e9ecef #dee2e6;
+            background-color: #f8f9fa;
+        }
+        .nav-tabs .nav-link.active {
+            color: #007bff;
+            background-color: #fff;
+            border-color: #dee2e6 #dee2e6 #fff;
+            font-weight: 500;
+        }
+        .form-label {
+            color: #495057;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: #495057;
+            background-color: #fff;
+        }
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #007bff;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+            border-radius: 6px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .btn-primary:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.5);
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: #fff;
+            border-radius: 6px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+            border-color: #1e7e34;
+        }
+        .btn-success:focus {
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
+        }
+
+        /* --- Estilos para o Grid de Consulta (Tabela) --- */
+        /* DataTables já aplica a maioria dos estilos, mas podemos ajustar */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            background-color: #007bff !important;
+            color: white !important;
+            border-color: #007bff !important;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #e9ecef !important;
+            border-color: #dee2e6 !important;
+        }
+        table.dataTable thead th,
+        table.dataTable tfoot th {
+            background-color: #007bff; /* Fundo do cabeçalho da tabela */
+            color: white; /* Cor do texto do cabeçalho */
+            border-color: #007bff; /* Borda do cabeçalho */
+            font-weight: 600;
+        }
+        table.dataTable {
+            border: 1px solid #e0e0e0; /* Borda externa da tabela */
+            border-collapse: collapse !important; /* Assegura que o DataTables não tenha bordas duplas */
+        }
+        table.dataTable td, table.dataTable th {
+            border: 1px solid #e0e0e0; /* Bordas internas */
+        }
+        table.dataTable.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8f8f8; /* Linhas zebradas */
+        }
+        table.dataTable.table-hover tbody tr:hover {
+            background-color: #eef2f5 !important; /* Hover */
+        }
+        .dataTables_wrapper .dataTables_filter input {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 0.5rem 0.75rem;
+        }
+        .dataTables_wrapper .dataTables_length select {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 0.5rem 0.75rem;
+        }
+        .dataTables_info, .dataTables_length, .dataTables_filter, .dataTables_paginate {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sistema de Gestão de Ramais do Condomínio</h1>
+    <ul class="nav nav-tabs" id="tabMenu" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="cadastro-tab" data-bs-toggle="tab" data-bs-target="#cadastro" type="button" role="tab" aria-controls="cadastro" aria-selected="true">Cadastro de Morador</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta" type="button" role="tab" aria-controls="consulta" aria-selected="false">Consulta de ligações por Data</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="cadastrousuario-tab" data-bs-toggle="tab" data-bs-target="#cadastrousuario" type="button" role="tab" aria-controls="cadastrousuario" aria-selected="false">Cadastro de usuários</button>
+        </li>
+    </ul>
+
+    <div class="tab-content pt-4" id="tabContent">
+
+        <div class="tab-pane fade show active" id="cadastro" role="tabpanel" aria-labelledby="cadastro-tab">
+            <form action="/cadastrar" method="POST">
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bloco" class="form-label">Bloco:</label>
+                    <input type="text" id="bloco" name="bloco" maxlength="1" class="form-control" oninput="AtualizarNumero()" required>
+                </div>
+                <div class="mb-3">
+                    <label for="apartamento" class="form-label">Apartamento:</label>
+                    <input type="text" id="apartamento" name="apartamento" maxlength="4" class="form-control" oninput="AtualizarNumero()" required>
+                </div>
+                <div class="mb-3">
+                    <label for="telefone" class="form-label">Número de Telefone:</label>
+                    <input type="text" id="telefone" name="telefone" class="form-control" readonly required>
+                </div>
+                <button type="submit" class="btn btn-primary">Inserir Morador</button>
+            </form>
+        </div>
+
+        <div class="tab-pane fade" id="cadastrousuario" role="tabpanel" aria-labelledby="cadastrousuario-tab">
+            <form action="/cadastrousuario" method="POST">
+                <div class="mb-3">
+                    <label for="login" class="form-label">Login:</label>
+                    <input type="text" id="login" name="login" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha:</label>
+                    <input type="password" id="senha" name="senha" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar Usuário</button>
+            </form>
+        </div>
+
+        <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
+            <form id="consultaForm"> <div class="mb-3">
+                    <label for="data_inicio" class="form-label">Data Início:</label>
+                    <input type="date" id="data_inicio" name="data_inicio" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="data_fim" class="form-label">Data Fim:</label>
+                    <input type="date" id="data_fim" name="data_fim" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success">Consultar</button>
+            </form>
+            <hr class="mt-4 mb-4"> <div id="resultadoConsulta">
+                <p class="alert alert-info text-center">Utilize o formulário acima para consultar as ligações.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    // Função para atualizar o número de telefone (já existia)
+    function AtualizarNumero() {
+        const bloco = document.getElementById('bloco').value;
+        const ap = document.getElementById('apartamento').value;
+        document.getElementById('telefone').value = bloco + ap;
+    }
+
+    // Script para a consulta com DataTables
+    $(document).ready(function() {
+        $('#consultaForm').on('submit', function(e) {
+            e.preventDefault(); // Impede o envio padrão do formulário
+
+            const dataInicio = $('#data_inicio').val();
+            const dataFim = $('#data_fim').val();
+
+            if (!dataInicio || !dataFim) {
+                $('#resultadoConsulta').html('<p class="alert alert-warning text-center">Por favor, informe as datas de início e fim.</p>');
+                return;
+            }
+
+            // Destroi a tabela existente se houver, para evitar duplicação
+            if ($.fn.DataTable.isDataTable('#tabelaResultados')) {
+                $('#tabelaResultados').DataTable().destroy();
+                $('#tabelaResultados').remove(); // Remove a tabela do DOM
+            }
+
+            // Exibe mensagem de carregamento
+            $('#resultadoConsulta').html('<p class="alert alert-info text-center">Carregando dados, por favor aguarde...</p>');
+
+            // Requisição AJAX para o servidor
+            $.ajax({
+                url: '/consultar', // O endpoint que agora retorna JSON
+                method: 'POST',
+                data: {
+                    data_inicio: dataInicio,
+                    data_fim: dataFim
+                },
+                success: function(response) {
+                    if (response.length === 0) {
+                        $('#resultadoConsulta').html('<p class="alert alert-info text-center">Nenhum registro encontrado para o período.</p>');
+                    } else {
+                        // Constrói a tabela HTML que o DataTables vai inicializar
+                        let tableHtml = `
+                            <div class="table-responsive">
+                                <table id="tabelaResultados" class="table table-striped table-hover table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Ramal Principal</th>
+                                            <th>Ramal Destino</th>
+                                            <th>Contexto</th>
+                                            <th>Ligação Realizada</th>
+                                            <th>Ligação Finalizada</th>
+                                            <th>Duração</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody> </table>
+                            </div>
+                        `;
+                        $('#resultadoConsulta').html(tableHtml);
+
+                        // Inicializa o DataTables com os dados recebidos
+                        $('#tabelaResultados').DataTable({
+                            data: response, // Os dados JSON do servidor
+                            columns: [ // Mapeia os dados JSON para as colunas da tabela
+                                { data: 'nomeramal' },
+                                { data: 'ramalprincipal' },
+                                { data: 'ramaldestino' },
+                                { data: 'contexto' },
+                                { data: 'ligacaorealizada' },
+                                { data: 'ligacaofinal' },
+                                { data: 'duracao' }
+                            ],
+                            language: { // Tradução para português
+                                url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json'
+                            }
+                        });
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#resultadoConsulta').html('<p class="alert alert-danger text-center">Erro ao carregar dados: ' + jqXHR.responseText + '</p>');
+                    console.error('Erro AJAX:', textStatus, errorThrown, jqXHR.responseText);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
