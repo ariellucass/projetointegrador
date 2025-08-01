@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>SGRC - Gestão de Ramais do Condomínio</title>
+    <title>GestãoVoIP Condominial</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,23 +11,23 @@
 
     <style>
         body {
-            background-color: #f8f9fa; /* Tom de cinza bem claro para o fundo */
+            background-color: #f8f9fa; 
             padding: 40px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna e legível */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             line-height: 1.6;
-            color: #343a40; /* Cor do texto padrão mais escura para melhor contraste */
+            color: #343a40; 
         }
         .container {
             background: #fff;
-            border-radius: 12px; /* Bordas mais arredondadas */
-            padding: 40px; /* Aumentar o padding interno */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Sombra suave */
-            border: 1px solid #e9ecef; /* Borda sutil para separação */
+            border-radius: 12px; 
+            padding: 40px; /
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            border: 1px solid #e9ecef; 
         }
         h1 {
-            color: #007bff; /* Um azul mais amigável e padrão do Bootstrap */
+            color: #007bff; 
             margin-bottom: 35px;
-            font-weight: 500; /* Peso da fonte um pouco mais leve */
+            font-weight: 500; 
         }
         .nav-tabs {
             border-bottom: 1px solid #dee2e6;
@@ -40,7 +40,7 @@
             color: #495057;
             padding: 10px 20px;
             margin-right: 5px;
-            transition: all 0.2s ease-in-out; /* Transição suave para hover */
+            transition: all 0.2s ease-in-out; 
         }
         .nav-tabs .nav-link:hover,
         .nav-tabs .nav-link:focus {
@@ -107,8 +107,6 @@
             box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5);
         }
 
-        /* --- Estilos para o Grid de Consulta (Tabela) --- */
-        /* DataTables já aplica a maioria dos estilos, mas podemos ajustar */
         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
             background-color: #007bff !important;
@@ -121,14 +119,14 @@
         }
         table.dataTable thead th,
         table.dataTable tfoot th {
-            background-color: #007bff; /* Fundo do cabeçalho da tabela */
-            color: Black !important; /* Cor do texto do cabeçalho - AQUI ESTÁ A MUDANÇA */
-            border-color: #007bff; /* Borda do cabeçalho */
+            background-color: #007bff; 
+            color: Black !important; 
+            border-color: #007bff; 
             font-weight: 600;
         }
         table.dataTable {
-            border: 1px solid #e0e0e0; /* Borda externa da tabela */
-            border-collapse: collapse !important; /* Assegura que o DataTables não tenha bordas duplas */
+            border: 1px solid #e0e0e0; 
+            border-collapse: collapse !important;
         }
         table.dataTable td, table.dataTable th {
             border: 1px solid #e0e0e0; /* Bordas internas */
@@ -158,7 +156,7 @@
 <body>
 
 <div class="container">
-    <h1>Sistema de Gestão de Ramais do Condomínio</h1>
+    <h1>GestãoVoIP Condominial</h1>
     <ul class="nav nav-tabs" id="tabMenu" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="cadastro-tab" data-bs-toggle="tab" data-bs-target="#cadastro" type="button" role="tab" aria-controls="cadastro" aria-selected="true">Cadastro de Morador</button>
